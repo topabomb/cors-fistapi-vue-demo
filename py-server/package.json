@@ -1,0 +1,13 @@
+{
+  "name": "py-server",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "init-venv":"python -m venv .venv && pip install \"fastapi[standard]\"",
+    "dev":"fastapi dev main.py --reload --port 8001"
+  }
+}
