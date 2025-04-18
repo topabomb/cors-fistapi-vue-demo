@@ -16,5 +16,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 @app.post("/items/")
-def create_item(item: Item):
+async def create_item(item: Item):
     return {"message": f"Item {item.name} created"}
+
+@app.get("/items/{item_id}")
+async def read_item(item_id: int):
+    rows=[]
+    for i in range(1, 100000):
+        rows.append({"id":i})
+    return {"rows":rows}

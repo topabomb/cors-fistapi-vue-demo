@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 interface PostItem {
   name: string
   description: string
@@ -26,47 +24,29 @@ onMounted(async () => {
   }
   setTimeout(proc, 2000)
 })
+const rows = ref([] as { id: number }[])
+fetch('http://localhost:8001/items/1')
+  .then((resp) => resp.json())
+  .then((data) => {
+    rows.value = data.rows
+  })
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <div class="wrapper"></div>
   </header>
 
   <main>
     <h1>从服务端返回的值：{{ data.message }}</h1>
-    <TheWelcome />
+    <div>rows 0: id={{ rows.length > 0 ? rows[0].id : '没数据' }}</div>
+    <div>
+      <div v-for="item in rows" :key="item.id">
+        <p>id: {{ item.id }}</p>
+      </div>
+    </div>
   </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
